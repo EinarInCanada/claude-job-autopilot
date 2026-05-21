@@ -43,7 +43,7 @@ variants:
     # New projects to insert before an existing anchor project (newest-first order)
     insert_projects:
       - title:    "Freelance Content Creator | Self-Employed"
-        date:     "Jan. 2025 – Present"
+        date:     "Jan. YYYY – Present"
         insert_before_keyword: "Project Alpha"
         clone_table_keyword:   "Project Alpha"
         bullets:

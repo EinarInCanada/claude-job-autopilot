@@ -152,8 +152,8 @@ Edit `config.yaml → ats_password_pattern`. The placeholder `{CompanyName}` is 
 with the actual company name when creating accounts. Example:
 
 ```yaml
-ats_password_pattern: "FirstName@{CompanyName}2026!"
-# → "FirstName@Shopify2026!"
+ats_password_pattern: "FirstName@{CompanyName}{Year}!"
+# → "FirstName@Shopify2025!"  ({Year} is replaced with the current calendar year at runtime)
 ```
 
 Choose a pattern that is memorable and meets common password requirements (uppercase,

@@ -2,9 +2,9 @@
 
 > Automated daily job applications powered by [Claude](https://claude.ai) + Claude in Chrome.
 
-Claude Job Autopilot is a **Claude Cowork skill pack** that automatically searches and applies to jobs every weekday morning — across your chosen platforms — using your tailored resumes and cover letters.
+Claude Job Autopilot is a **Claude Cowork skill pack** that automatically searches and applies to jobs on a schedule you set — across whichever platforms you choose — using your tailored resumes and cover letters.
 
-**Works for any role, any level, any industry.** Whether you're a new grad hunting your first job or a senior engineer making a move, everything is driven by your `config.yaml` — no code changes needed.
+**Works for any role, any level, any industry, anywhere in the world.** Everything is driven by your `config.yaml` — no code changes needed. Use the built-in platforms (LinkedIn, Indeed, Glassdoor, Monster) or add any job board in the world with a simple URL template.
 
 ---
 
@@ -13,7 +13,7 @@ Claude Job Autopilot is a **Claude Cowork skill pack** that automatically search
 - **Fully configurable experience level** — set `entry`, `junior`, `mid`, or `senior` in one line; the skill adjusts seniority filters and experience requirements automatically
 - **Any role, any industry** — define your own resume variants and search directions; the four built-in examples (ML/AI, Software Dev, Data Analyst, PM) are just a starting point
 - **Smart resume selection** — reads each full job description and picks the best-matching resume from your library based on keyword overlap, not just job title
-- **Flexible platforms** — LinkedIn, Indeed, Glassdoor, and Monster are included by default; enable or disable any of them, or add custom platforms with a search URL template
+- **Fully flexible platforms** — use any combination of job boards worldwide; LinkedIn, Indeed, Glassdoor, and Monster work out of the box, and any other platform can be added with a one-line URL template
 - **Daily rotation** — platform order and search direction both rotate each weekday so every platform gets equal priority over the week
 - **Freshness-first** — always targets the most recently posted qualifying jobs first
 - **Company size filter** — optionally skip large corporations and focus on small-to-mid-size companies

@@ -67,16 +67,27 @@ Read the limit from `config.yaml → applications_per_platform` (default: 5).
 
 ## Experience Level Rules
 
-Read `config.yaml → experience_level` and apply the corresponding rules:
+Read `config.yaml → experience_level` to get the active level (e.g. `"junior"`).
+Then read `config.yaml → experience_level_rules → {level}` for the exact filtering parameters.
 
-| Level | Max years exp required by JD | Title rule |
-|---|---|---|
-| `entry` | 1 year | Title **must** contain: Intern, Entry, Junior, Jr., Graduate, New Grad |
-| `junior` | 2 years | Title contains one of the above **OR** contains no seniority word at all |
-| `mid` | 5 years | Title must **not** contain: Senior, Sr., Lead, Staff, Principal, Manager, Director, VP |
-| `senior` | unlimited | No title restriction |
+Apply the rules as follows:
 
-If `config.yaml → job_search → filters` has explicit `max_years_experience` or `allowed_seniority` overrides, use those instead.
+**`entry` and `junior` levels:**
+- The job's required experience must not exceed `max_years_exp`.
+- Check the job title against `required_keywords`. If the title contains at least one → pass.
+- If the title contains none of `required_keywords`, check `blocked_keywords`. If it contains any blocked word → reject. Otherwise → pass (untitled / generic roles are accepted for `junior`).
+
+**`mid` level:**
+- The job's required experience must not exceed `max_years_exp`.
+- Reject any title that contains a word from `blocked_keywords`.
+- All other titles pass.
+
+**`senior` level:**
+- If `title_unrestricted: true`, apply no title filter at all.
+- Only the `max_years_exp` limit applies (effectively unlimited).
+
+All keyword comparisons are case-insensitive.
+If `config.yaml → job_search → filters` has explicit `max_years_experience` or `allowed_seniority` overrides, those take priority over `experience_level_rules`.
 
 ---
 
@@ -133,7 +144,7 @@ Cover letter path: `{output_dir}/cover_letters/CoverLetter_{resume_variants[key]
    - Years of experience → `education.years_of_experience` (paid only — exclude unpaid roles in `work_experience.unpaid_roles`)
    - Education level → `education.degree`
    - Visa/permit type → `work_authorization.visa_status`
-6. CAPTCHA: attempt once. If unsolved, leave tab open, log `[CAPTCHA — manual required]`, move on.
+6. CAPTCHA: attempt up to `config.yaml → captcha_max_attempts` times. If still unsolved, leave the tab open and log `[CAPTCHA — manual required]`. Move on.
 7. Submit. Log result.
 
 ### B. Indeed Apply
@@ -143,28 +154,28 @@ Cover letter path: `{output_dir}/cover_letters/CoverLetter_{resume_variants[key]
 3. Fill fields from `config.yaml → user` (same mapping as LinkedIn above).
 4. Upload resume PDF.
 5. Answer screening questions as above.
-6. CAPTCHA: attempt once; leave tab open if failed.
+6. CAPTCHA: attempt up to `captcha_max_attempts` times; leave tab open if still unsolved.
 7. Submit. Log result.
 
 ### C. External ATS (Greenhouse, Lever, Workday, iCIMS, BambooHR, etc.)
 
 1. Look for **Sign in with Google** or an existing account option — use it if available.
 2. If no SSO: check `application_log.txt` for a previous account at this company.
-   - Found: use stored credentials (`user.email` + `ats_password_pattern` with company name substituted).
-   - Not found: create account with `user.email` and the generated password. Log it.
+   - Found: use stored credentials (`user.email` + `ats_password_pattern` with `{CompanyName}` and `{Year}` substituted).
+   - Not found: create account with `user.email` and the generated password (`{CompanyName}` → actual company name, `{Year}` → current calendar year). Log it.
 3. Fill all form fields from `config.yaml → user`.
 4. Upload resume PDF. Attach cover letter .docx if a file field is provided; otherwise paste first 3 paragraphs as plain text.
 5. Work authorization questions → use `work_authorization` values from config.
-6. CAPTCHA: attempt once; leave tab open if failed.
+6. CAPTCHA: attempt up to `captcha_max_attempts` times; leave tab open if still unsolved.
 7. Submit. Log result.
 
-### D. Glassdoor / Monster
+### D. Other Built-in Platforms (Glassdoor, Monster, or any named platform without a custom search_url)
 
-Follow the same flow as Indeed (B) / External ATS (C) as applicable.
+Follow the same flow as Indeed (B) / External ATS (C) as applicable, based on the platform's `apply_type`.
 
-### E. Custom Platforms
+### E. Custom Platforms (with `search_url` defined)
 
-For any platform in `config.yaml → platforms` beyond the four built-ins:
+For any platform in `config.yaml → platforms` that has a `search_url` field:
 
 1. If `search_url` is provided: navigate to it with `{keywords}` and `{location}` substituted.
 2. If `apply_type == "in_app"`: use the native apply flow and fill fields from `config.yaml → user`.
@@ -217,8 +228,8 @@ Append one line to `{output_dir}/{log_file}` per application attempt:
 
 Example:
 ```
-[2026-05-19] [LinkedIn] Acme Corp | Marketing Coordinator | Resume: A - Marketing / Communications | Posted: 2026-05-18 | Outcome: Applied
-[2026-05-19] [Indeed] Globex Ltd | Finance Analyst | Resume: B - Finance / Accounting | Posted: 2026-05-17 | Outcome: CAPTCHA — manual required
+[YYYY-MM-DD] [LinkedIn] Acme Corp | Marketing Coordinator | Resume: A - Marketing / Communications | Posted: YYYY-MM-DD | Outcome: Applied
+[YYYY-MM-DD] [Indeed] Globex Ltd | Finance Analyst | Resume: B - Finance / Accounting | Posted: YYYY-MM-DD | Outcome: CAPTCHA — manual required
 ```
 
 ---
@@ -228,7 +239,7 @@ Example:
 - **Never** enter payment information, national ID numbers, or banking details.
 - **Never** accept terms or agreements without showing the user first — exception: standard cookie consent banners (decline all non-essential cookies automatically).
 - **Never** apply to the same company + role twice (check log before applying).
-- **CAPTCHA**: attempt exactly once. If unsolved, leave tab open, log the outcome, move on. Never retry.
+- **CAPTCHA**: attempt up to `config.yaml → captcha_max_attempts` times (default: 1). If still unsolved after all attempts, leave the tab open, log `[CAPTCHA — manual required]`, and move on. Setting this to 0 means unlimited retries — not recommended, as repeated attempts risk bot-detection and session expiry.
 - If a required config value is blank, auto-detect from the session (e.g., LinkedIn URL) or skip that field.
 - Stop and ask the user if an unexpected form field appears that cannot be answered from `config.yaml`.
 

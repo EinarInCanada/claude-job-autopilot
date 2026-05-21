@@ -30,14 +30,74 @@ work_authorization:
                                     # e.g., "Currently on a work permit expiring YYYY-MM-DD. No sponsorship required."
 
 # ── Experience Level ────────────────────────────────────────
-# Controls which jobs are considered a match.
+# Set your level. The skill uses the rules defined in `experience_level_rules`
+# below to filter jobs. Defaults are pre-filled — customise any value.
 # Options: entry | junior | mid | senior
-#
-#   entry  — 0–1 yrs paid exp. Title MUST contain: Intern, Entry, Junior, Jr., Graduate, New Grad
-#   junior — 0–2 yrs paid exp. Title contains one of the above OR has no seniority word at all
-#   mid    — 2–5 yrs paid exp. Skips: Senior, Sr., Lead, Staff, Principal, Manager, Director, VP
-#   senior — 5+ yrs paid exp. No title restriction — applies to any role
 experience_level: "junior"
+
+# ── Experience Level Rules ───────────────────────────────────
+# These are the filtering rules for each level.
+# Defaults are shown — edit any value to suit your situation.
+#
+# max_years_exp:      Skip jobs that explicitly require MORE than this many years.
+# required_keywords:  (entry / junior only) Job title MUST contain at least one of these.
+# blocked_keywords:   (mid / senior) Job title must NOT contain any of these.
+# title_unrestricted: (senior only) If true, no title filtering is applied.
+
+experience_level_rules:
+  entry:
+    max_years_exp: 1
+    required_keywords:
+      - "Intern"
+      - "Internship"
+      - "Entry"
+      - "Entry-Level"
+      - "Junior"
+      - "Jr."
+      - "Graduate"
+      - "New Grad"
+      - "Trainee"
+
+  junior:
+    max_years_exp: 2
+    required_keywords:           # Title must contain one of these OR have no seniority word
+      - "Junior"
+      - "Jr."
+      - "Associate"
+      - "Entry"
+      - "Entry-Level"
+      - "Graduate"
+      - "New Grad"
+      - "Trainee"
+    blocked_keywords:            # If title contains none of required_keywords, it still passes
+      - "Senior"                 # UNLESS it contains one of these (then it's rejected)
+      - "Sr."
+      - "Lead"
+      - "Staff"
+      - "Principal"
+      - "Manager"
+      - "Director"
+      - "Head"
+      - "VP"
+      - "Chief"
+
+  mid:
+    max_years_exp: 5
+    blocked_keywords:            # Skip any title containing these words
+      - "Senior"
+      - "Sr."
+      - "Lead"
+      - "Staff"
+      - "Principal"
+      - "Manager"
+      - "Director"
+      - "Head"
+      - "VP"
+      - "Chief"
+
+  senior:
+    max_years_exp: 99            # No practical limit
+    title_unrestricted: true     # Apply to any title regardless of seniority words
 
 # ── Education ───────────────────────────────────────────────
 education:
@@ -187,47 +247,105 @@ search_directions:
       - "associate"
 
 # ── Platforms ────────────────────────────────────────────────
-# List the platforms you want to use.
-# Built-in support: LinkedIn, Indeed, Glassdoor, Monster.
-# Add custom platforms with a search_url template and apply_type.
+# Define every platform you want Claude to apply on.
+# This list is fully yours — add, remove, or reorder as you like.
 #
-# Custom platform fields:
-#   name:        Display name used in the rotation and log
-#   search_url:  URL with {keywords} and {location} placeholders
-#   apply_type:  "external_ats" | "in_app"
-#   notes:       (optional) quirks or tips
+# Built-in platforms (no search_url needed — Claude knows how to navigate them):
+#   LinkedIn | Indeed | Glassdoor | Monster
+#
+# For any other platform, provide a search_url template so Claude knows
+# where to search. Use {keywords} and {location} as placeholders.
+#
+# Fields:
+#   name        — display name used in the rotation table and the log file
+#   apply_type  — "in_app"       Claude fills a native apply form on the platform
+#                 "external_ats" platform redirects to the company's own ATS
+#   search_url  — (required for custom platforms) URL template with {keywords} and {location}
+#   notes       — (optional) any quirks Claude should know about this platform
 
 platforms:
+
+  # ── Popular global platforms ──────────────────────────────────
+  # Remove any you don't use. Keep at least one.
+
   - name: "LinkedIn"
     apply_type: "in_app"
+
   - name: "Indeed"
     apply_type: "in_app"
+
   - name: "Glassdoor"
     apply_type: "external_ats"
+
   - name: "Monster"
     apply_type: "in_app"
 
-  # ── Custom platform examples ─────────────────────────────────
-  # - name: "Reed"                        # UK
+  # ── Add more platforms below ──────────────────────────────────
+  # Uncomment or copy any of these, or write your own.
+
+  # United Kingdom
+  # - name: "Reed"
   #   search_url: "https://www.reed.co.uk/jobs/{keywords}-jobs-in-{location}"
   #   apply_type: "external_ats"
   #
-  # - name: "Seek"                        # Australia / New Zealand
+  # - name: "Totaljobs"
+  #   search_url: "https://www.totaljobs.com/jobs/{keywords}/in-{location}"
+  #   apply_type: "external_ats"
+
+  # Australia / New Zealand
+  # - name: "Seek"
   #   search_url: "https://www.seek.com.au/{keywords}-jobs/in-{location}"
   #   apply_type: "external_ats"
-  #
-  # - name: "StepStone"                   # Germany / Europe
+
+  # Canada
+  # - name: "Workopolis"
+  #   search_url: "https://www.workopolis.com/jobsearch/find-jobs?ak={keywords}&l={location}"
+  #   apply_type: "external_ats"
+
+  # Germany / Europe
+  # - name: "StepStone"
   #   search_url: "https://www.stepstone.de/jobs/{keywords}/{location}"
   #   apply_type: "external_ats"
-  #
-  # - name: "Naukri"                      # India
+
+  # India
+  # - name: "Naukri"
   #   search_url: "https://www.naukri.com/{keywords}-jobs-in-{location}"
   #   apply_type: "external_ats"
 
+  # France
+  # - name: "HelloWork"
+  #   search_url: "https://www.hellowork.com/en-ca/jobs/?k={keywords}&l={location}"
+  #   apply_type: "external_ats"
+
+  # USA
+  # - name: "ZipRecruiter"
+  #   search_url: "https://www.ziprecruiter.com/jobs-search?search={keywords}&location={location}"
+  #   apply_type: "in_app"
+  #
+  # - name: "SimplyHired"
+  #   search_url: "https://www.simplyhired.com/search?q={keywords}&l={location}"
+  #   apply_type: "external_ats"
+
+  # Remote / global
+  # - name: "We Work Remotely"
+  #   search_url: "https://weworkremotely.com/remote-jobs/search?term={keywords}"
+  #   apply_type: "external_ats"
+  #   notes: "Remote-only listings. Location filter not applicable."
+  #
+  # - name: "Remote.co"
+  #   search_url: "https://remote.co/remote-jobs/search/?search_keywords={keywords}"
+  #   apply_type: "external_ats"
+
 # ── Platform Rotation (Mon–Fri) ──────────────────────────────
-# Both platform order and direction order rotate each weekday.
-# Only list platform names that appear in `platforms` above.
-# Only list direction keys that appear in `search_directions` above.
+# Controls the order platforms and search directions are processed each day.
+# Both lists rotate across the week so every platform gets equal priority.
+#
+# IMPORTANT: Only include platform names that exist in `platforms` above.
+# If you add or remove platforms, update every day's list here to match.
+# If you only have 2 platforms, just list those 2 each day.
+#
+# Direction keys must match keys defined in `search_directions` above.
+
 platform_rotation:
   Monday:
     platforms: ["LinkedIn", "Indeed", "Glassdoor", "Monster"]
@@ -248,18 +366,28 @@ platform_rotation:
 # ── Public Holidays to Skip ──────────────────────────────────
 # Add your local public holidays in YYYY-MM-DD format.
 # The skill skips these days automatically.
-# Add a new `dates_20XX` block each year.
+# Add a new `dates_YYYY` block each year — key must match the actual calendar year.
+# The skill reads whichever block matches today's year automatically.
 holidays:
+  dates_2025:
+    - "2025-01-01"   # New Year's Day
+    # - "2025-XX-XX" # Add your local holidays here
+
   dates_2026:
     - "2026-01-01"   # New Year's Day
-    # Add your country/region holidays below:
-    # - "2026-XX-XX"   # Holiday name
+    # - "2026-XX-XX" # Add your local holidays here
+
+  # Add more years as needed:
+  # dates_2027:
+  #   - "2027-01-01"
 
 # ── External ATS Password Pattern ────────────────────────────
 # Used when creating new accounts on external career portals.
 # {CompanyName} is replaced with the actual company name at runtime.
-ats_password_pattern: "YourName@{CompanyName}2026!"
-# Example result: "YourName@Shopify2026!"
+ats_password_pattern: "YourName@{CompanyName}{Year}!"
+# {CompanyName} → replaced with the actual company name at runtime
+# {Year}        → replaced with the current calendar year at runtime
+# Example result: "YourName@Shopify2025!"  ({Year} = current calendar year at runtime)
 
 # ── Application Limits ───────────────────────────────────────
 # How many jobs to apply to per platform per day.
@@ -268,6 +396,20 @@ ats_password_pattern: "YourName@{CompanyName}2026!"
 # There is no upper limit, but most platforms will run out of qualifying
 # fresh listings before you reach more than 10–15 per day.
 applications_per_platform: 5
+
+# ── CAPTCHA Handling ─────────────────────────────────────────
+# How many times to attempt a CAPTCHA before giving up.
+#
+# Default: 1 — attempt once, then leave the tab open for you to complete manually.
+# This is the recommended setting. Multiple retries risk triggering bot-detection,
+# getting your IP flagged, or causing the form session to expire.
+#
+# You may increase this if you find CAPTCHAs are solvable with a second try
+# (e.g., simple checkbox reCAPTCHA). Use with caution.
+#
+# Set to 0 for unlimited attempts — NOT recommended. Claude will keep retrying
+# indefinitely, which will slow down the run and may get your account flagged.
+captcha_max_attempts: 1
 
 # ── Schedule ─────────────────────────────────────────────────
 # Default: every weekday at 9:00 AM in your local timezone.
