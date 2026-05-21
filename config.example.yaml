@@ -1,0 +1,279 @@
+# ============================================================
+#  Claude Job Autopilot — Configuration Template
+#  Copy this file to config.yaml and fill in your own values.
+#  config.yaml is gitignored and will never be committed.
+# ============================================================
+
+# ── Personal Information ─────────────────────────────────────
+user:
+  legal_name: ""                    # As it appears on government ID
+  legal_first_name: ""
+  legal_last_name: ""
+  preferred_name: ""                # As you'd like to appear on applications
+  display_first_name: ""            # Used on general (non-legal) form fields
+  email: ""
+  phone: ""                         # Digits only, no spaces or dashes
+  city: ""                          # e.g., "New York, NY" / "London" / "Sydney, NSW"
+  postal_code: ""
+  region: ""                        # State, province, or equivalent
+  country: ""                       # e.g., "United States" / "Canada" / "United Kingdom"
+  portfolio_url: ""                 # Leave blank if not applicable
+  linkedin_url: ""                  # Leave blank to auto-detect from logged-in session
+
+# ── Work Authorization ───────────────────────────────────────
+work_authorization:
+  authorized_to_work: true          # Are you legally allowed to work in your target country?
+  requires_sponsorship: false       # Do you need employer visa/work permit sponsorship?
+  visa_status: ""                   # e.g., Citizen | Permanent Resident | Work Permit | Student Visa
+  visa_expiry: ""                   # YYYY-MM-DD — leave blank if not applicable
+  note: ""                          # Free-text note for clarification fields on applications
+                                    # e.g., "Currently on a work permit expiring YYYY-MM-DD. No sponsorship required."
+
+# ── Experience Level ────────────────────────────────────────
+# Controls which jobs are considered a match.
+# Options: entry | junior | mid | senior
+#
+#   entry  — 0–1 yrs paid exp. Title MUST contain: Intern, Entry, Junior, Jr., Graduate, New Grad
+#   junior — 0–2 yrs paid exp. Title contains one of the above OR has no seniority word at all
+#   mid    — 2–5 yrs paid exp. Skips: Senior, Sr., Lead, Staff, Principal, Manager, Director, VP
+#   senior — 5+ yrs paid exp. No title restriction — applies to any role
+experience_level: "junior"
+
+# ── Education ───────────────────────────────────────────────
+education:
+  degree: ""                        # e.g., "Bachelor's degree" / "Master's degree" / "Diploma"
+  field: ""                         # e.g., "Business Administration" / "Computer Science"
+  school: ""
+  years_of_experience: 0            # Total years of PAID work experience
+
+# ── Work Experience ──────────────────────────────────────────
+work_experience:
+  paid_experience_note: ""          # Brief note on your paid experience for clarification fields
+  current_employer: ""              # Leave blank if unemployed or self-employed
+  unpaid_roles: []                  # Volunteer / unpaid roles — excluded from paid experience count
+    # - "Volunteer Coordinator, Local NGO (unpaid)"
+    # - "Research Assistant, University Lab (unpaid)"
+
+# ── File Paths ──────────────────────────────────────────────
+paths:
+  output_dir: "~/job_hunt"                              # Where resumes, cover letters, and log are saved
+  resume_template: "~/job_hunt/my_resume_template.docx" # Your base .docx resume
+  resumes_subdir: "resumes"
+  cover_letters_subdir: "cover_letters"
+  log_file: "application_log.txt"
+
+# ── Job Search Preferences ───────────────────────────────────
+job_search:
+  location: ""                      # Primary location, e.g., "New York, NY" / "London" / "Remote"
+  location_alternatives:            # Fallback locations if primary yields too few results
+    - ""
+
+  # Filters — seniority and max years experience are set by `experience_level` above.
+  # Uncomment the overrides below only if you need finer control.
+  filters:
+    # max_years_experience: 2       # Skip jobs requiring more years than this
+    # allowed_seniority:            # Title must contain one of these (or no seniority word)
+    #   - "Junior"
+    #   - "Associate"
+    #   - "Entry"
+    #   - "Graduate"
+    company_size: "any"             # small_to_mid | any
+    skip_companies: []              # Company names to always skip
+      # - "Company Name"
+
+# ── Resume Variants ─────────────────────────────────────────
+# Define one entry per resume variant you have prepared.
+# The skill reads the full JD and picks the variant whose jd_keywords best match.
+# Replace these examples with your own role categories — any industry works.
+resume_variants:
+  A:
+    label: "Marketing / Communications"
+    filename: "Resume_Marketing"
+    jd_keywords:
+      - "marketing"
+      - "content"
+      - "social media"
+      - "copywriting"
+      - "brand"
+      - "SEO"
+      - "campaign"
+      - "communications"
+      - "PR"
+
+  B:
+    label: "Finance / Accounting"
+    filename: "Resume_Finance"
+    jd_keywords:
+      - "accounting"
+      - "finance"
+      - "bookkeeping"
+      - "audit"
+      - "financial analysis"
+      - "CPA"
+      - "budget"
+      - "reconciliation"
+      - "Excel"
+
+  C:
+    label: "Operations / Administration"
+    filename: "Resume_Operations"
+    jd_keywords:
+      - "operations"
+      - "coordinator"
+      - "administrator"
+      - "office manager"
+      - "logistics"
+      - "project coordinator"
+      - "scheduling"
+      - "procurement"
+
+  D:
+    label: "Sales / Business Development"
+    filename: "Resume_Sales"
+    jd_keywords:
+      - "sales"
+      - "business development"
+      - "account manager"
+      - "client relations"
+      - "CRM"
+      - "revenue"
+      - "lead generation"
+      - "B2B"
+      - "B2C"
+
+# ── Search Directions ────────────────────────────────────────
+# Define the search keyword sets to rotate through each day.
+# Replace these examples with directions relevant to your job hunt.
+# You can have as many or as few directions as you like.
+search_directions:
+  Direction1:
+    label: "Marketing & Communications"
+    keywords:
+      - "junior marketing coordinator"
+      - "entry level content creator"
+      - "junior social media manager"
+      - "junior communications specialist"
+
+  Direction2:
+    label: "Finance & Accounting"
+    keywords:
+      - "junior accountant"
+      - "entry level financial analyst"
+      - "junior bookkeeper"
+      - "accounting assistant"
+
+  Direction3:
+    label: "Operations & Administration"
+    keywords:
+      - "junior operations coordinator"
+      - "office administrator"
+      - "entry level project coordinator"
+      - "administrative assistant"
+
+  Direction4:
+    label: "Sales & Business Development"
+    keywords:
+      - "junior sales representative"
+      - "entry level business development"
+      - "junior account manager"
+      - "sales associate"
+
+  Direction5:
+    label: "General / Broad Search"
+    keywords:
+      - "entry level"
+      - "junior coordinator"
+      - "graduate program"
+      - "associate"
+
+# ── Platforms ────────────────────────────────────────────────
+# List the platforms you want to use.
+# Built-in support: LinkedIn, Indeed, Glassdoor, Monster.
+# Add custom platforms with a search_url template and apply_type.
+#
+# Custom platform fields:
+#   name:        Display name used in the rotation and log
+#   search_url:  URL with {keywords} and {location} placeholders
+#   apply_type:  "external_ats" | "in_app"
+#   notes:       (optional) quirks or tips
+
+platforms:
+  - name: "LinkedIn"
+    apply_type: "in_app"
+  - name: "Indeed"
+    apply_type: "in_app"
+  - name: "Glassdoor"
+    apply_type: "external_ats"
+  - name: "Monster"
+    apply_type: "in_app"
+
+  # ── Custom platform examples ─────────────────────────────────
+  # - name: "Reed"                        # UK
+  #   search_url: "https://www.reed.co.uk/jobs/{keywords}-jobs-in-{location}"
+  #   apply_type: "external_ats"
+  #
+  # - name: "Seek"                        # Australia / New Zealand
+  #   search_url: "https://www.seek.com.au/{keywords}-jobs/in-{location}"
+  #   apply_type: "external_ats"
+  #
+  # - name: "StepStone"                   # Germany / Europe
+  #   search_url: "https://www.stepstone.de/jobs/{keywords}/{location}"
+  #   apply_type: "external_ats"
+  #
+  # - name: "Naukri"                      # India
+  #   search_url: "https://www.naukri.com/{keywords}-jobs-in-{location}"
+  #   apply_type: "external_ats"
+
+# ── Platform Rotation (Mon–Fri) ──────────────────────────────
+# Both platform order and direction order rotate each weekday.
+# Only list platform names that appear in `platforms` above.
+# Only list direction keys that appear in `search_directions` above.
+platform_rotation:
+  Monday:
+    platforms: ["LinkedIn", "Indeed", "Glassdoor", "Monster"]
+    directions: ["Direction1", "Direction2", "Direction3", "Direction4", "Direction5"]
+  Tuesday:
+    platforms: ["Indeed", "Glassdoor", "Monster", "LinkedIn"]
+    directions: ["Direction2", "Direction3", "Direction4", "Direction5", "Direction1"]
+  Wednesday:
+    platforms: ["Glassdoor", "Monster", "LinkedIn", "Indeed"]
+    directions: ["Direction3", "Direction4", "Direction5", "Direction1", "Direction2"]
+  Thursday:
+    platforms: ["Monster", "LinkedIn", "Indeed", "Glassdoor"]
+    directions: ["Direction4", "Direction5", "Direction1", "Direction2", "Direction3"]
+  Friday:
+    platforms: ["LinkedIn", "Monster", "Indeed", "Glassdoor"]
+    directions: ["Direction5", "Direction1", "Direction2", "Direction3", "Direction4"]
+
+# ── Public Holidays to Skip ──────────────────────────────────
+# Add your local public holidays in YYYY-MM-DD format.
+# The skill skips these days automatically.
+# Add a new `dates_20XX` block each year.
+holidays:
+  dates_2026:
+    - "2026-01-01"   # New Year's Day
+    # Add your country/region holidays below:
+    # - "2026-XX-XX"   # Holiday name
+
+# ── External ATS Password Pattern ────────────────────────────
+# Used when creating new accounts on external career portals.
+# {CompanyName} is replaced with the actual company name at runtime.
+ats_password_pattern: "YourName@{CompanyName}2026!"
+# Example result: "YourName@Shopify2026!"
+
+# ── Application Limits ───────────────────────────────────────
+# How many jobs to apply to per platform per day.
+# Default: 5 per platform. With 4 platforms that is up to 20 applications/day.
+# Lower this if you want a slower, more selective pace.
+# There is no upper limit, but most platforms will run out of qualifying
+# fresh listings before you reach more than 10–15 per day.
+applications_per_platform: 5
+
+# ── Schedule ─────────────────────────────────────────────────
+# Default: every weekday at 9:00 AM in your local timezone.
+# Change `time` to any 24h time that works for you.
+# Change `days` to run on fewer days (e.g., ["Monday", "Wednesday", "Friday"]).
+schedule:
+  time: "09:00"                     # Local time, 24h format — e.g., "08:30" / "12:00"
+  timezone: ""                      # e.g., "America/New_York" / "Europe/London" / "Asia/Tokyo"
+  days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]

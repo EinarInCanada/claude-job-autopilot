@@ -1,0 +1,32 @@
+# Personal configuration — never commit
+config.yaml
+
+# Personal variant definitions — contain your resume content
+variants/resumes.yaml
+variants/coverletters.yaml
+
+# Generated output files
+*.docx
+*.pdf
+application_log.txt
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.env
+venv/
+.venv/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo

@@ -1,0 +1,85 @@
+# ============================================================
+#  Resume Variants — Example Definition File
+#  Copy this to variants/resumes.yaml and customise.
+#  variants/resumes.yaml is gitignored — never committed.
+#
+#  Each entry in `variants` generates one .docx resume.
+#
+#  How the script works:
+#   1. Copies your resume_template.docx (path from config.yaml)
+#   2. Replaces the summary in the first table cell
+#   3. Updates bullet points under each project header table
+#      (matched by the `find_keyword` text search)
+#      Set `bullets: null` to remove a project section entirely
+#   4. Inserts new project sections BEFORE a specified anchor
+#   5. Replaces skills-section paragraphs
+#
+#  These examples use Marketing and Finance — replace them with
+#  whatever roles you are actually applying for.
+# ============================================================
+
+variants:
+
+  # ── Example: Marketing / Communications ──────────────────────────────────
+  - filename: "Resume_Marketing.docx"
+
+    summary: >
+      Results-driven marketing professional with experience in content creation,
+      social media management, and campaign execution. Skilled in SEO, copywriting,
+      and cross-functional collaboration. Passionate about building brands that
+      connect with audiences. Seeking a Marketing Coordinator or Communications
+      role in [Your City].
+
+    # Projects already in your template — keep, update, or remove their bullets.
+    # Set bullets: null to remove a project section entirely (saves page space).
+    projects:
+      - find_keyword: "Project Alpha"      # Unique text that appears in the project header
+        bullets:
+          - "Led social media calendar for 3 brand accounts — grew combined following by 18% in 6 months."
+          - "Produced weekly newsletter (2,400 subscribers, 42% open rate) using Mailchimp and Canva."
+      - find_keyword: "Project Beta"
+        bullets: null                      # Remove this project for this variant
+
+    # New projects to insert before an existing anchor project (newest-first order)
+    insert_projects:
+      - title:    "Freelance Content Creator | Self-Employed"
+        date:     "Jan. 2025 – Present"
+        insert_before_keyword: "Project Alpha"
+        clone_table_keyword:   "Project Alpha"
+        bullets:
+          - "Produced SEO-optimised blog posts and social content for 4 small business clients."
+          - "Increased average client organic traffic by 30% over 3 months through keyword strategy."
+
+    skills:
+      - "Marketing Tools: Hootsuite, Buffer, Mailchimp, Google Analytics, Meta Ads Manager"
+      - "Content & Design: Canva, Adobe Express, Copywriting, SEO, Content Strategy"
+      - "Productivity: Microsoft Office, Google Workspace, Notion, Trello, Asana"
+      - "Concepts: Brand Management, Campaign Planning, Audience Research, A/B Testing"
+
+
+  # ── Example: Finance / Accounting ────────────────────────────────────────
+  - filename: "Resume_Finance.docx"
+
+    summary: >
+      Detail-oriented finance graduate with hands-on experience in bookkeeping,
+      financial reporting, and data analysis. Proficient in Excel, QuickBooks,
+      and financial modelling. Strong analytical skills with a commitment to
+      accuracy and compliance. Seeking a Junior Accountant or Finance Analyst role.
+
+    projects:
+      - find_keyword: "Project Alpha"
+        bullets:
+          - "Reconciled monthly bank statements for 3 departments, reducing discrepancies by 95%."
+          - "Prepared financial reports and variance analysis for management review."
+      - find_keyword: "Project Beta"
+        bullets:
+          - "Assisted with year-end audit preparation — compiled supporting schedules and documentation."
+          - "Automated monthly expense tracking using Excel pivot tables, saving 4 hrs/week."
+
+    insert_projects: []
+
+    skills:
+      - "Accounting Software: QuickBooks, Xero, Sage, SAP (basic)"
+      - "Spreadsheet & Analysis: Excel (pivot tables, VLOOKUP, macros), Google Sheets"
+      - "Reporting: Financial Statements, Variance Analysis, Budget vs Actual"
+      - "Concepts: GAAP, Accounts Payable/Receivable, Bank Reconciliation, Payroll"

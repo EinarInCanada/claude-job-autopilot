@@ -1,0 +1,96 @@
+# ============================================================
+#  Cover Letter Variants — Example Definition File
+#  Copy this to variants/coverletters.yaml and customise.
+#  variants/coverletters.yaml is gitignored — never committed.
+#
+#  Each entry generates one .docx cover letter.
+#  The filename should match the corresponding resume variant.
+#
+#  Your name, email, phone, city, and portfolio URL are pulled
+#  automatically from config.yaml → user.
+#
+#  These examples use Marketing and Finance — replace them with
+#  whatever roles you are actually applying for.
+# ============================================================
+
+variants:
+
+  # ── Marketing / Communications ────────────────────────────────────────────
+  - filename: "CoverLetter_Marketing.docx"
+    salutation: "Dear Hiring Manager,"
+    body:
+      - >
+        I am a marketing professional with hands-on experience in content creation,
+        social media management, and SEO-driven campaigns. I have a track record of
+        growing brand audiences and producing creative assets that convert — from
+        email newsletters with 40%+ open rates to organic content strategies that
+        increased traffic by 30% within a quarter.
+      - >
+        I am highly comfortable working across tools like Hootsuite, Google Analytics,
+        and Canva, and I thrive in collaborative, fast-paced environments where I can
+        contribute ideas as well as execution. I take pride in producing work that is
+        both on-brand and backed by data.
+      - >
+        I would love to bring my skills to your team and contribute to campaigns that
+        make a real impact. I am available for an interview at your earliest convenience
+        and look forward to the opportunity to connect.
+    closing: "Sincerely,"
+
+  # ── Finance / Accounting ──────────────────────────────────────────────────
+  - filename: "CoverLetter_Finance.docx"
+    salutation: "Dear Hiring Manager,"
+    body:
+      - >
+        I am a finance graduate with practical experience in bookkeeping, financial
+        reporting, and reconciliation. I am detail-oriented by nature and take
+        compliance and accuracy seriously — I have a strong record of producing
+        clean, audit-ready schedules and reducing month-end discrepancies.
+      - >
+        I am proficient in Excel (pivot tables, VLOOKUP, macros), QuickBooks, and Xero.
+        I enjoy finding ways to streamline repetitive financial workflows — for example,
+        automating monthly expense tracking in Excel saved my previous team four hours
+        per week with no additional tooling cost.
+      - >
+        I am excited by the opportunity to grow within a finance team where rigour and
+        initiative are valued. I would welcome the chance to discuss how my background
+        aligns with your needs.
+    closing: "Sincerely,"
+
+  # ── Operations / Administration ───────────────────────────────────────────
+  - filename: "CoverLetter_Operations.docx"
+    salutation: "Dear Hiring Manager,"
+    body:
+      - >
+        I am an operations-minded professional with experience coordinating projects,
+        managing schedules, and supporting cross-functional teams. I am known for
+        staying organised under pressure and proactively spotting process inefficiencies
+        before they become problems.
+      - >
+        I am comfortable working with tools like Microsoft Office, Google Workspace,
+        Asana, and Notion, and I adapt quickly to new systems. I bring a service
+        mindset to everything I do — making sure the people around me have what they
+        need to succeed.
+      - >
+        I would be glad to bring my coordination and problem-solving skills to your
+        team. Please feel free to reach out to arrange a conversation.
+    closing: "Sincerely,"
+
+  # ── Sales / Business Development ─────────────────────────────────────────
+  - filename: "CoverLetter_Sales.docx"
+    salutation: "Dear Hiring Manager,"
+    body:
+      - >
+        I am a motivated sales professional with a passion for building relationships
+        and uncovering opportunities. I have experience in lead generation, client
+        outreach, and pipeline management, and I am comfortable working in both B2B
+        and B2C environments.
+      - >
+        I am goal-oriented and data-driven — I track my own performance metrics and
+        consistently look for ways to improve my conversion rate and shorten the sales
+        cycle. I enjoy consultative selling and am good at listening to what clients
+        actually need before presenting a solution.
+      - >
+        I am eager to join a team where I can develop my skills, hit targets, and
+        grow with the business. I would love to discuss how I can contribute to your
+        sales goals.
+    closing: "Sincerely,"
