@@ -325,6 +325,40 @@ platforms:
   # - name: "SimplyHired"
   #   search_url: "https://www.simplyhired.com/search?q={keywords}&l={location}"
   #   apply_type: "external_ats"
+  #
+  # - name: "CareerBuilder"
+  #   search_url: "https://www.careerbuilder.com/jobs?keywords={keywords}&location={location}"
+  #   apply_type: "external_ats"
+  #
+  # - name: "Dice"
+  #   search_url: "https://www.dice.com/jobs?q={keywords}&location={location}"
+  #   apply_type: "external_ats"
+  #   notes: "Tech-focused listings."
+  #
+  # - name: "Handshake"
+  #   search_url: "https://joinhandshake.com/jobs?query={keywords}&location={location}"
+  #   apply_type: "external_ats"
+  #   notes: "New grad / student-focused. Requires a Handshake account."
+  #
+  # - name: "USAJobs"
+  #   search_url: "https://www.usajobs.gov/Search/Results?k={keywords}&l={location}"
+  #   apply_type: "external_ats"
+  #   notes: "US federal government jobs only."
+
+  # Canada
+  # - name: "Workopolis"
+  #   search_url: "https://www.workopolis.com/jobsearch/find-jobs?ak={keywords}&l={location}"
+  #   apply_type: "external_ats"
+  #
+  # - name: "Job Bank"
+  #   search_url: "https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring={keywords}&locationstring={location}"
+  #   apply_type: "external_ats"
+  #   notes: "Canadian government job board. Covers all industries."
+  #
+  # - name: "Eluta"
+  #   search_url: "https://www.eluta.ca/search?q={keywords}&l={location}"
+  #   apply_type: "external_ats"
+  #   notes: "Aggregates jobs directly from company career pages."
 
   # Remote / global
   # - name: "We Work Remotely"
